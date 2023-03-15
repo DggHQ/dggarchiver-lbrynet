@@ -9,6 +9,5 @@ RUN cd lbry-sdk && make install
 FROM debian:buster-slim
 COPY --from=builder /usr/local/bin/lbrynet /usr/local/bin/
 COPY entrypoint.sh /
-RUN which lbrynet
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]

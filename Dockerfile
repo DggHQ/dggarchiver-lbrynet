@@ -1,13 +1,9 @@
-FROM debian:bullseye-slim
-
-ENV LBRY_VER=0.113.0
-
-RUN apt-get update && apt-get upgrade -y && apt-get install -y zip wget cron
-RUN wget https://github.com/lbryio/lbry-sdk/raw/master/docker/webconf.yaml -O /webconf.yaml
-RUN wget https://github.com/lbryio/lbry-sdk/releases/download/v${LBRY_VER}/lbrynet-linux.zip && \
-	unzip lbrynet-linux.zip -d /usr/bin && \
-	chmod +x /usr/bin/lbrynet
-
+FROM python:3.7-slim-buster
+RUN apt-get update
+RUN apt-get install build-essential git libssl-dev -y
+RUN git clone https://github.com/lbryio/lbry-sdk.git
+RUN cd lbry-sdk && make install
+RUN echo "Installed at $(which lbrynet)"
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]

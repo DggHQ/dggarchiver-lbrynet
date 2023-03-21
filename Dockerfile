@@ -6,7 +6,7 @@ RUN git clone https://github.com/lbryio/lbry-sdk.git --branch v0.113.0 --single-
 RUN cd lbry-sdk && make install
 
 
-FROM debian:buster-slim
+FROM python:3.7-slim-buster
 COPY --from=builder /usr/local/bin/lbrynet /usr/local/bin/
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
